@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,28 @@ public class Controller {
             }
         }
         return "Estudiante eliminado";
+    }
+
+    @PutMapping(path = "/estudiante/actualizar/{id}") // PutMapping es para editar o actualizar
+    public String actualizaEstudiante(@PathVariable int id,@RequestBody Estudiante estudianteActualizado){ //Requestbody son datos que se envian desde el cuerpo de la página
+        List<Estudiante> nuevaLista = new ArrayList<>();
+        boolean existeId=false;
+        for (Estudiante estudiante: this.estudiantes){
+
+            if(estudiante.getId()== id) {
+                existeId=true;                             // Esto es para verificar si el codigo existe
+                estudianteActualizado.setId(id);
+                nuevaLista.add(estudianteActualizado);
+            }else{
+                nuevaLista.add(estudiante);
+            }
+        }this.estudiantes= nuevaLista;
+        if(existeId){
+            return "Estudiante actualizado correctamente";
+        }else{
+            return "Este ID no existe";
+        }
+
     }
 
 }
