@@ -7,7 +7,7 @@ public class Estudiante {
     private int id;
     private String nombre;
     private int semestre;
-    private  String facultad;
+    private String facultad;
 
     public int getId() {
         return id;
@@ -43,8 +43,10 @@ public class Estudiante {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Estudiante that = (Estudiante) o;
         return id == that.id;
     }
@@ -54,4 +56,3 @@ public class Estudiante {
         return Objects.hash(id);
     }
 }
-

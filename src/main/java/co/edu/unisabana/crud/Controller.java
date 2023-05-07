@@ -1,6 +1,7 @@
 package co.edu.unisabana.crud;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +39,16 @@ public class Controller {
             }
         }
         return busqueda;
+    }
+
+    @GetMapping(path = "/estudiante/eliminar/{id}")
+    public String eliminarEstudiantesPorId(@PathVariable int id) { // Path variable para solo el dato en especifico
+        for (Estudiante estudiante : this.estudiantes) {
+            if (estudiante.getId() == id) {
+                this.estudiantes.remove(estudiante);
+            }
+        }
+        return "Estudiante eliminado";
     }
 
 }
