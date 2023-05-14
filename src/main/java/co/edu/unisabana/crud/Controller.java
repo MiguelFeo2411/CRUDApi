@@ -15,6 +15,11 @@ import java.util.List;
 public class Controller {
     List<Estudiante> estudiantes = new ArrayList<>();
 
+    public Controller()
+    {
+        estudiantes.add(new Estudiante(1123, "Carlos Andrés", 3, "Ingeniería"));
+    }
+
     @GetMapping(path = "/estudiantes/todos")
     public List<Estudiante> obtenerEstudiantes() {
         return estudiantes;
