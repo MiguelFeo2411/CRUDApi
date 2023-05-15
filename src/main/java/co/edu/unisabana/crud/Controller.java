@@ -20,9 +20,9 @@ public class Controller {
         return estudiantes;
     }
 
-    @PostMapping(path = "/estudiante/crear") // Post crear
-    public Respuesta crearEstudiante(@RequestBody Estudiante estudiante) { // Requestbody son datos que se envian desde el
-        // cuerpo de la página
+    @PostMapping(path = "/estudiante/crear")
+    public Respuesta crearEstudiante(@RequestBody Estudiante estudiante) {
+
         estudiante.setId((int) (Math.random() * 1000));
         this.estudiantes.add(estudiante);
         return new Respuesta("Estudiante creado correctamente");
@@ -43,17 +43,17 @@ public class Controller {
     }
 
     @GetMapping(path = "/estudiante/eliminar/{id}")
-    public String eliminarEstudiantesPorId(@PathVariable int id) { // Path variable para solo el dato en especifico
+    public Respuesta eliminarEstudiantesPorId(@PathVariable int id) {
         for (Estudiante estudiante : this.estudiantes) {
             if (estudiante.getId() == id) {
                 this.estudiantes.remove(estudiante);
             }
         }
-        return "Estudiante eliminado";
+        return new Respuesta("Estudiante eliminado correctamente");
     }
 
     @PutMapping(path = "/estudiante/actualizar/{id}")
-    public String actualizaEstudiante(@PathVariable int id, @RequestBody Estudiante estudianteActualizado) {
+    public Respuesta actualizaEstudiante(@PathVariable int id, @RequestBody Estudiante estudianteActualizado) {
         for (Estudiante estudiante : this.estudiantes) {
             if (estudiante.getId() == id) {
                 estudianteActualizado.setId(id);
@@ -64,7 +64,7 @@ public class Controller {
                 break;
             }
         }
-        return "Estudiante actualizado";
+        return new Respuesta("Estudiante actualizado correctamente");
     }
 
 }
