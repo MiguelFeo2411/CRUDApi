@@ -52,26 +52,19 @@ public class Controller {
         return "Estudiante eliminado";
     }
 
-    @PutMapping(path = "/estudiante/actualizar/{id}") // PutMapping es para editar o actualizar
-    public String actualizaEstudiante(@PathVariable int id,@RequestBody Estudiante estudianteActualizado){ //Requestbody son datos que se envian desde el cuerpo de la página
-        List<Estudiante> nuevaLista = new ArrayList<>();
-        boolean existeId=false;
-        for (Estudiante estudiante: this.estudiantes){
-
-            if(estudiante.getId()== id) {
-                existeId=true;                             // Esto es para verificar si el codigo existe
+    @PutMapping(path = "/estudiante/actualizar/{id}")
+    public String actualizaEstudiante(@PathVariable int id, @RequestBody Estudiante estudianteActualizado) {
+        for (Estudiante estudiante : this.estudiantes) {
+            if (estudiante.getId() == id) {
                 estudianteActualizado.setId(id);
-                nuevaLista.add(estudianteActualizado);
-            }else{
-                nuevaLista.add(estudiante);
+                estudiante.setNombre(estudianteActualizado.getNombre());
+                estudiante.setSemestre(estudianteActualizado.getSemestre());
+                estudiante.setFacultad(estudianteActualizado.getFacultad());
+                estudiante.setPrograma(estudianteActualizado.getPrograma());
+                break;
             }
-        }this.estudiantes= nuevaLista;
-        if(existeId){
-            return "Estudiante actualizado correctamente";
-        }else{
-            return "Este ID no existe";
         }
-
+        return "Estudiante actualizado";
     }
 
 }
