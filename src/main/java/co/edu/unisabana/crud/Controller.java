@@ -15,21 +15,17 @@ import java.util.List;
 public class Controller {
     List<Estudiante> estudiantes = new ArrayList<>();
 
-    public Controller() {
-        estudiantes.add(new Estudiante(1123, "Carlos Andres", 3, "ingenieria", "informatico"));
-    }
-
     @GetMapping(path = "/estudiantes/todos")
     public List<Estudiante> obtenerEstudiantes() {
         return estudiantes;
     }
 
     @PostMapping(path = "/estudiante/crear") // Post crear
-    public String crearEstudiante(@RequestBody Estudiante estudiante) { // Requestbody son datos que se envian desde el
+    public Respuesta crearEstudiante(@RequestBody Estudiante estudiante) { // Requestbody son datos que se envian desde el
         // cuerpo de la página
         estudiante.setId((int) (Math.random() * 1000));
         this.estudiantes.add(estudiante);
-        return "Estudiante ingresado correctamente";
+        return new Respuesta("Estudiante creado correctamente");
     }
 
     @GetMapping(path = "/estudiantes/filtro")
@@ -57,23 +53,22 @@ public class Controller {
     }
 
     @PutMapping(path = "/estudiante/actualizar/{id}") // PutMapping es para editar o actualizar
-    public String actualizaEstudiante(@PathVariable int id, @RequestBody Estudiante estudianteActualizado) { //Requestbody son datos que se envian desde el cuerpo de la página
+    public String actualizaEstudiante(@PathVariable int id,@RequestBody Estudiante estudianteActualizado){ //Requestbody son datos que se envian desde el cuerpo de la página
         List<Estudiante> nuevaLista = new ArrayList<>();
-        boolean existeId = false;
-        for (Estudiante estudiante : this.estudiantes) {
+        boolean existeId=false;
+        for (Estudiante estudiante: this.estudiantes){
 
-            if (estudiante.getId() == id) {
-                existeId = true;                             // Esto es para verificar si el codigo existe
+            if(estudiante.getId()== id) {
+                existeId=true;                             // Esto es para verificar si el codigo existe
                 estudianteActualizado.setId(id);
                 nuevaLista.add(estudianteActualizado);
-            } else {
+            }else{
                 nuevaLista.add(estudiante);
             }
-        }
-        this.estudiantes = nuevaLista;
-        if (existeId) {
+        }this.estudiantes= nuevaLista;
+        if(existeId){
             return "Estudiante actualizado correctamente";
-        } else {
+        }else{
             return "Este ID no existe";
         }
 
